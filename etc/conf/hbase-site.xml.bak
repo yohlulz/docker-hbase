@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+<property>
+  <name>hbase.cluster.distributed</name>
+  <value>true</value>
+</property>
+  <property>
+    <name>hbase.rootdir</name>
+    <value>file:////opt/hbase-data/tsd21-hbase11-data/hbase-${user.name}/hbase</value>
+  </property>
+   <property>
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>/opt/hbase-data/tsd21-hbase11-data/zookeeper</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.dns.interface</name>
+    <value>default</value>
+  </property>
+  <property>
+    <name>hbase.regionserver.dns.interface</name>
+    <value>default</value>
+  </property>
+  <property>
+    <name>hbase.master.dns.interface</name>
+    <value>default</value>
+  </property>
+   <property >
+    <name>hbase.tmp.dir</name>
+    <value>/opt/hbase-data/tsd21-hbase11-tmp/</value>
+    <description>Temporary directory on the local filesystem.
+    Change this setting to point to a location more permanent
+    than '/tmp', the usual resolve for java.io.tmpdir, as the
+    '/tmp' directory is cleared on machine restart.</description>
+  </property>
+    <property>
+    <name>hbase.offpeak.start.hour</name>
+    <value>20</value>
+    <description>The start of off-peak hours, expressed as an integer between 0 and 23, inclusive.
+      Set to -1 to disable off-peak.</description>
+  </property>
+    <property>
+    <name>hbase.offpeak.end.hour</name>
+    <value>23</value>
+    <description>The end of off-peak hours, expressed as an integer between 0 and 23, inclusive. Set
+      to -1 to disable off-peak.</description>
+  </property>
+<property>
+  <name>zookeeper.session.timeout</name>
+  <value>1200000</value>
+</property>
+<property>
+  <name>hbase.zookeeper.property.tickTime</name>
+  <value>6000</value>
+</property>
+  <property>
+    <name>hbase.zookeeper.property.maxClientCnxns</name>
+    <value>600</value>
+    <description>Property from ZooKeeper's config zoo.cfg.
+    Limit on number of concurrent connections (at the socket level) that a
+    single client, identified by IP address, may make to a single member of
+    the ZooKeeper ensemble. Set high to avoid zk connection issues running
+    standalone and pseudo-distributed.</description>
+  </property>
+    <property>
+    <name>hbase.bucketcache.ioengine</name>
+    <value>offheap</value>
+    <description>Where to store the contents of the bucketcache. One of: heap,
+      offheap, or file. If a file, set it to file:PATH_TO_FILE. See https://hbase.apache.org/apidocs/org/apache/hadoop/hbase/io/hfile/CacheConfig.html for more information.
+    </description>
+  </property>
+  <property>
+    <name>hbase.bucketcache.size</name>
+    <value>1024</value>
+    <description>The size of the buckets for the bucketcache if you only use a single size.
+      Defaults to the default blocksize, which is 64 * 1024.</description>
+  </property>
+<property>
+  <name>hbase.master.distributed.log.splitting</name>
+  <value>false</value>
+</property>
+</configuration>

@@ -1,0 +1,2 @@
+docker run --name=prod_hbase -h hbase_readonly -d -p 2181:2181 -p 16000-16100:16000-16100 -p 8080:8080 -v /opt/work/docker/tora/docker-20160108/hbase/data/hbase/:/opt/hbase-data -v /opt/work/docker/tora/docker-20160108/hbase/dat
+a/conf:/opt/hbase/conf  tora/hbase
