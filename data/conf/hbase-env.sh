@@ -30,7 +30,7 @@ export JAVA_HOME=/usr/java/jdk1.7
 # export HBASE_CLASSPATH=
 
 # The maximum amount of heap to use. Default is left to JVM default.
-export HBASE_HEAPSIZE=2G
+export HBASE_HEAPSIZE=1024m
 
 # Uncomment below if you intend to use off heap cache. For example, to allocate 8G of 
 # offheap, set the value to "8G".
@@ -45,8 +45,8 @@ export HBASE_OPTS="-XX:+UseG1GC -XX:+UseMembar"
 
 # Configure PermSize. Only needed in JDK7. You can safely remove it for JDK8+
 export HBASE_MASTER_OPTS="$HBASE_MASTER_OPTS -XX:PermSize=128m -XX:MaxPermSize=128m"
-export HBASE_REGIONSERVER_OPTS="$HBASE_REGIONSERVER_OPTS -XX:PermSize=128m -XX:MaxPermSize=128m -Xmx1200m"
-export HBASE_ZOOKEEPER_OPTS="$HBASE_ZOOKEEPER_OPTS -XX:PermSize=128m -XX:MaxPermSize=128m -Xmx1200m"
+export HBASE_REGIONSERVER_OPTS="$HBASE_REGIONSERVER_OPTS -XX:PermSize=128m -XX:MaxPermSize=128m -Xmx1024m"
+export HBASE_ZOOKEEPER_OPTS="$HBASE_ZOOKEEPER_OPTS -XX:PermSize=128m -XX:MaxPermSize=128m -Xmx1024m"
 
 
 

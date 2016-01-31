@@ -1,6 +1,6 @@
 FROM ubuntu
 
-ENV HBASE_VER=1.1.2
+ENV HBASE_VER=1.1.3
 
 ############################### System reqs
 # install requirements

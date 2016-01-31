@@ -1,0 +1,11 @@
+hbase:
+ image: utcn/hbase
+ container_name: prod_hbase
+ hostname: hbase_readonly
+ ports:
+ - "2181:2181"
+ - "16000-16100:16000-16100"
+ - "8080:8080"
+ volumes:
+ - ./data/hbase:/opt/hbase-data
+ - ./data/conf:/opt/hbase/conf
