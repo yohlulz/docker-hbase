@@ -1,6 +1,6 @@
 FROM ubuntu
 
-ENV HBASE_VER=1.1.3
+ENV HBASE_VER=1.1.2
 
 ############################### System reqs
 # install requirements
@@ -22,7 +22,8 @@ RUN \
 			liblzo2-dev \
 			make \
 			supervisor \
-			git
+			git \
+			openssh-server
 
 # install java
 RUN \
@@ -38,6 +39,13 @@ ENV JAVA_HOME=/usr/java/jdk1.7
 
 # For nano to work properly
 ENV TERM=xterm
+RUN sed -i 's|#AuthorizedKeysFile.*authorized_keys|AuthorizedKeysFile /etc/ssh/keys/authorized_keys|g' /etc/ssh/sshd_config
+RUN mkdir -p /etc/ssh/keys && touch /etc/ssh/keys/authorized_keys
+RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN mkdir -p /var/run/sshd
 ############################################
 
 ############################# Hbase specific
@@ -45,7 +53,7 @@ ENV TERM=xterm
 USER root
 
 # Install hbase
-RUN curl -fLs http://apache.org/dist/hbase/${HBASE_VER}/hbase-${HBASE_VER}-bin.tar.gz | tar xzf - -C /opt && mv /opt/hbase-${HBASE_VER} /opt/hbase
+RUN curl -fLs http://archive.apache.org/dist/hbase/${HBASE_VER}/hbase-${HBASE_VER}-bin.tar.gz | tar xzf - -C /opt && mv /opt/hbase-${HBASE_VER} /opt/hbase
 
 # Add HBASE to path
 ENV PATH=/opt/hbase/bin:$PATH
@@ -76,6 +84,10 @@ RUN git clone git://github.com/cloudera/hadoop-lzo.git /tmp/lzo && \
 RUN hbase org.apache.hadoop.hbase.util.CompressionTest /tmp/test_file lzo
 ########################################
 
+############################# Cleanup
+RUN apt-get clean autoremove autoclean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+###########################################
+
 ############################ EXPOSE PORTS
 # zookeeper
 EXPOSE 2181
@@ -94,10 +106,13 @@ EXPOSE 16030
 
 # hbase.rest.port
 EXPOSE 8080
+
+# SSH
+EXPOSE 22
 ############################################
 
 
-VOLUME ["/opt/hbase-data", "/opt/hbase/conf"]
+VOLUME ["/opt/hbase-data", "/opt/hbase/conf", "/etc/ssh/keys"]
 
 #Start supervisor
 CMD ["/opt/hbase/bin/startup.sh"]

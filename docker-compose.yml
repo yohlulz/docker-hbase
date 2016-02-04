@@ -9,3 +9,4 @@ hbase:
  volumes:
  - ./data/hbase:/opt/hbase-data
  - ./data/conf:/opt/hbase/conf
+ - ./data/ssh/keys:/etc/ssh/keys
